@@ -15,7 +15,7 @@ function Product({ post, categories }) {
       <Head>
         <title>{post.title}</title>
       </Head>
-      <Navbar data={categories}/>
+      <Navbar data={categories} />
       <div className="py-[181px] max-w-[1240px] mx-auto px-2">
         <div className="grid lg:grid-cols-6 gap-5">
           {/* Left */}
@@ -50,7 +50,8 @@ function Product({ post, categories }) {
                   {post.title}
                 </h2>
                 <p className="py-10 font-bold">
-                  Regular Price: <span className="text-gray-500">$ {post.regular_price}</span>
+                  Regular Price:{" "}
+                  <span className="text-gray-500">$ {post.regular_price}</span>
                 </p>
 
                 <div className="py-5">
@@ -100,7 +101,10 @@ function Product({ post, categories }) {
                     />
                   </label>
                 </div>
-                <button type="button" className="flex gap-4 w-70 p-4 mt-4 shadow-xl shadow-gray-400 rounded-xl uppercase bg-gradient-to-r from-[#5651e5] to-[#709dff] text-white">
+                <button
+                  type="button"
+                  className="flex gap-4 w-70 p-4 mt-4 shadow-xl shadow-gray-400 rounded-xl uppercase bg-gradient-to-r from-[#5651e5] to-[#709dff] text-white"
+                >
                   Add to Cart{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -126,30 +130,26 @@ function Product({ post, categories }) {
   );
 }
 
-export async function getStaticPaths(){
-  return{
-    paths: [{params: { slug: "boots-3" } }],
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { slug: "boots-3" } }],
     fallback: true,
   };
 }
 
 export async function getStaticProps({ params }) {
-
   const res = await fetch(`http://127.0.0.1:8000/api/${params.slug}`);
   const post = await res.json();
 
   const ress = await fetch("http://127.0.0.1:8000/api/category/");
   const categories = await ress.json();
 
-
-  return{
+  return {
     props: {
       post,
       categories,
     },
   };
-
 }
-
 
 export default Product;
